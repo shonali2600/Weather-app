@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
-// import clear from './resources/clear.png';
 import clouds from './resources/clouds.png';
-// import drizzle from './resources/drizzle.png';
 import fog from './resources/foggy.png';
-// import rain from './resources/rain.png';
-// import snow from './resources/snow.png';
-// import storm from './resources/storm.png'
 
 const api = {
   key: '97fb6d4b965c8b3055efd86c28d52b1c',
@@ -15,7 +10,8 @@ const api = {
 function App() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
-  const [noFound, setFound] = useState(false);
+  // const [notFound, setFound] = useState(false);
+
   const search = (evt) => {
     if (evt.key === 'Enter') {
       fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
@@ -24,14 +20,6 @@ function App() {
           setWeather(result);
           setQuery('');
           console.log(result);
-          if (result.main) {
-            console.log('heheh');
-            setFound(false);
-          } else {
-            console.log('hahha');
-            setFound(true);
-          }
-          console.log(noFound);
         });
     }
   };
@@ -65,7 +53,7 @@ function App() {
     let date = d.getDate();
     let month = months[d.getMonth()];
     let year = d.getFullYear();
-    return `${day} ${date} ${month} ${year}`;
+    return `${day}, ${date} ${month} ${year}`;
   };
 
   return (
@@ -98,15 +86,13 @@ function App() {
 
               <div className='date'>{dateBuilder(new Date())}</div>
             </div>
-            {/* <div className="weather-box"> */}
+
             <div id='temp'>{Math.round(weather.main.temp)}°C</div>
             <div id='description'>{weather.weather[0].main}</div>
-            {/* </div> */}
           </div>
-        ) : (
-          ''
-        )}
-        {noFound ? <h1 className='No_city'> No City found</h1> : ' '}
+        ): (<h1 className='No_city'> No City found</h1>) }
+
+        {/* {notFound ? <h1 className='No_city'> No City found</h1> : ' '} */}
       </section>
     </div>
   );
